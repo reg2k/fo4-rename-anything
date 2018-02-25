@@ -1,0 +1,3 @@
+[submodule "src/rva"]
+	path = src/rva
+	url = https://github.com/reg2k/rva.git
