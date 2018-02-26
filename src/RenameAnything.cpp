@@ -66,7 +66,7 @@ RVA <_ExtraTextDisplayData_Create> ExtraTextDisplayData_Create({
 //--------------------
 
 bool RenameReference(TESObjectREFR* akRef, const char* asName) {
-	if (!akRef) return false;
+    if (!akRef) return false;
     ExtraTextDisplayData* extraData = (ExtraTextDisplayData*)akRef->extraDataList->GetByType(ExtraDataType::kExtraData_TextDisplayData);
     if (strcmp(asName, "") != 0) {
         if (!extraData) {
@@ -81,40 +81,40 @@ bool RenameReference(TESObjectREFR* akRef, const char* asName) {
             akRef->extraDataList->Remove(ExtraDataType::kExtraData_TextDisplayData, extraData);
         }
     }
-	return true;
+    return true;
 }
 
 bool SetName_Execute(void * paramInfo, void * scriptData, TESObjectREFR * thisObj, void * containingObj, void * scriptObj, void * locals, double * result, void * opcodeOffsetPtr)
 {
-	if (thisObj) {
-		char newName[MAX_PATH] = {};
-		bool result = Console_GetArgument(paramInfo, scriptData, opcodeOffsetPtr, thisObj, containingObj, scriptObj, locals, &newName);
+    if (thisObj) {
+        char newName[MAX_PATH] = {};
+        bool result = Console_GetArgument(paramInfo, scriptData, opcodeOffsetPtr, thisObj, containingObj, scriptObj, locals, &newName);
 
-		if (result) {
-			_MESSAGE("New name: %s", newName);
+        if (result) {
+            _MESSAGE("New name: %s", newName);
 
-			BSFixedString originalName = CALL_MEMBER_FN(thisObj, GetReferenceName)();
-			RenameReference(thisObj, &newName[0]);
-			BSFixedString renamedName = CALL_MEMBER_FN(thisObj, GetReferenceName)();
+            BSFixedString originalName = CALL_MEMBER_FN(thisObj, GetReferenceName)();
+            RenameReference(thisObj, &newName[0]);
+            BSFixedString renamedName = CALL_MEMBER_FN(thisObj, GetReferenceName)();
 
-			const char* originalNameStr = originalName.c_str();
-			const char* renamedNameStr  = renamedName.c_str();
+            const char* originalNameStr = originalName.c_str();
+            const char* renamedNameStr  = renamedName.c_str();
 
-			if (!newName) {
-				Console_Print("RenameAnything >> Name reset to default.");
-			} else if (originalName == renamedName) {
-				Console_Print("RenameAnything >> %s was not renamed.", renamedNameStr);
-			} else {
-				Console_Print("RenameAnything >> %s renamed to %s.", originalNameStr, renamedNameStr);
-			}
-		} else {
-			_MESSAGE("Could not extract argument from command.");
-		}
-	} else {
-		Console_Print("No reference selected.");
-	}
+            if (!newName) {
+                Console_Print("RenameAnything >> Name reset to default.");
+            } else if (originalName == renamedName) {
+                Console_Print("RenameAnything >> %s was not renamed.", renamedNameStr);
+            } else {
+                Console_Print("RenameAnything >> %s renamed to %s.", originalNameStr, renamedNameStr);
+            }
+        } else {
+            _MESSAGE("Could not extract argument from command.");
+        }
+    } else {
+        Console_Print("No reference selected.");
+    }
 
-	return true;
+    return true;
 }
 
 //-----------------------
@@ -124,42 +124,42 @@ bool SetName_Execute(void * paramInfo, void * scriptData, TESObjectREFR * thisOb
 class F4SEScaleform_OnEnableRename : public GFxFunctionHandler
 {
 public:
-	virtual void F4SEScaleform_OnEnableRename::Invoke(Args* args)
-	{
-		bool result = args->movie->movieRoot->SetVariable("root.BaseInstance.allowRename", &GFxValue(true));
-		_MESSAGE("Rename enabled: %d", result);
-	}
+    virtual void F4SEScaleform_OnEnableRename::Invoke(Args* args)
+    {
+        bool result = args->movie->movieRoot->SetVariable("root.BaseInstance.allowRename", &GFxValue(true));
+        _MESSAGE("Rename enabled: %d", result);
+    }
 };
 
 bool RegisterScaleform(GFxMovieView * view, GFxValue * f4se_root)
 {
-	GFxMovieRoot *root = view->movieRoot;
+    GFxMovieRoot *root = view->movieRoot;
 
-	GFxValue currentSWFPath;
-	const char* currentSWFPathString = nullptr;
-	if (root->GetVariable(&currentSWFPath, "root.loaderInfo.url")) {
-		currentSWFPathString = currentSWFPath.GetString();
-	} else {
-		_MESSAGE("WARNING: Scaleform registration failed.");
-		return true;
-	}
+    GFxValue currentSWFPath;
+    const char* currentSWFPathString = nullptr;
+    if (root->GetVariable(&currentSWFPath, "root.loaderInfo.url")) {
+        currentSWFPathString = currentSWFPath.GetString();
+    } else {
+        _MESSAGE("WARNING: Scaleform registration failed.");
+        return true;
+    }
 
-	if (strcmp(currentSWFPathString, "Interface/ExamineMenu.swf") == 0) {
-		_MESSAGE("ExamineMenu opened");
+    if (strcmp(currentSWFPathString, "Interface/ExamineMenu.swf") == 0) {
+        _MESSAGE("ExamineMenu opened");
 
-		// Create BGSCodeObj.EnableRename();
-		GFxValue codeObj;
-		root->GetVariable(&codeObj, "root.BaseInstance.BGSCodeObj");
+        // Create BGSCodeObj.EnableRename();
+        GFxValue codeObj;
+        root->GetVariable(&codeObj, "root.BaseInstance.BGSCodeObj");
 
-		if (!codeObj.IsUndefined()) {
-			RegisterFunction<F4SEScaleform_OnEnableRename>(&codeObj, root, "EnableRename");
-			_MESSAGE("Successfully registered scaleform native.");
-		} else {
-			_MESSAGE("Scaleform native registration failed.");
-		}
-	}
+        if (!codeObj.IsUndefined()) {
+            RegisterFunction<F4SEScaleform_OnEnableRename>(&codeObj, root, "EnableRename");
+            _MESSAGE("Successfully registered scaleform native.");
+        } else {
+            _MESSAGE("Scaleform native registration failed.");
+        }
+    }
 
-	return true;
+    return true;
 }
 
 extern "C"
@@ -205,43 +205,43 @@ bool F4SEPlugin_Query(const F4SEInterface * f4se, PluginInfo * info)
         _MESSAGE("INFO: Newer game version (%08X) than target (%08X).", f4se->runtimeVersion, SUPPORTED_RUNTIME_VERSION);
     }
 
-	// get the scaleform interface and query its version
-	g_scaleform = (F4SEScaleformInterface *)f4se->QueryInterface(kInterface_Scaleform);
-	if(!g_scaleform)
-	{
-		_MESSAGE("couldn't get scaleform interface");
-		return false;
-	}
+    // get the scaleform interface and query its version
+    g_scaleform = (F4SEScaleformInterface *)f4se->QueryInterface(kInterface_Scaleform);
+    if(!g_scaleform)
+    {
+        _MESSAGE("couldn't get scaleform interface");
+        return false;
+    }
 
-	// get the papyrus interface and query its version
-	g_papyrus = (F4SEPapyrusInterface *)f4se->QueryInterface(kInterface_Papyrus);
-	if (!g_papyrus) {
-		_MESSAGE("couldn't get papyrus interface");
-		return false;
-	}
+    // get the papyrus interface and query its version
+    g_papyrus = (F4SEPapyrusInterface *)f4se->QueryInterface(kInterface_Papyrus);
+    if (!g_papyrus) {
+        _MESSAGE("couldn't get papyrus interface");
+        return false;
+    }
 
-	return true;
+    return true;
 }
 
 bool F4SEPlugin_Load(const F4SEInterface *f4se)
 {
-	_MESSAGE("rename_anything load");
+    _MESSAGE("rename_anything load");
     RVAManager::UpdateAddresses(f4se->runtimeVersion);
-	g_scaleform->Register("rename_anything", RegisterScaleform);
+    g_scaleform->Register("rename_anything", RegisterScaleform);
 
-	// patch memory
-	unsigned char data[] = { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 };
-	SafeWriteBuf(InspectMode_Check.GetUIntPtr(), &data, sizeof(data));
+    // patch memory
+    unsigned char data[] = { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 };
+    SafeWriteBuf(InspectMode_Check.GetUIntPtr(), &data, sizeof(data));
 
-	// Read plugin settings from INI
-	int bAllowHTML = GetPrivateProfileInt("RenameAnything", "bAllowHTML", 1, "./Data/F4SE/Plugins/rename_anything.ini");
-	if (bAllowHTML == 1) {
-		// patch html entity check
-		// patch JNE with JMP unconditional
-		UInt8 data2 = 0xEB;
-		SafeWrite8(HTMLEntity_Check.GetUIntPtr(), data2);
-		_MESSAGE("bAllowHTML: %d", bAllowHTML);
-	}
+    // Read plugin settings from INI
+    int bAllowHTML = GetPrivateProfileInt("RenameAnything", "bAllowHTML", 1, "./Data/F4SE/Plugins/rename_anything.ini");
+    if (bAllowHTML == 1) {
+        // patch html entity check
+        // patch JNE with JMP unconditional
+        UInt8 data2 = 0xEB;
+        SafeWrite8(HTMLEntity_Check.GetUIntPtr(), data2);
+        _MESSAGE("bAllowHTML: %d", bAllowHTML);
+    }
 
     ObScriptParam* CommandParams = nullptr;
     // Find params
@@ -266,9 +266,9 @@ bool F4SEPlugin_Load(const F4SEInterface *f4se)
         }
     }
 
-	_MESSAGE("patch complete");
+    _MESSAGE("patch complete");
 
-	return true;
+    return true;
 }
 
 };
