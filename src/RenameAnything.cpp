@@ -24,6 +24,7 @@ F4SEPapyrusInterface   *g_papyrus   = NULL;
 //--------------------
 
 RVA <uintptr_t> InspectMode_Check({
+    { RUNTIME_VERSION_1_10_75, 0x00B18861 },
     { RUNTIME_VERSION_1_10_64, 0x00B18861 },
     { RUNTIME_VERSION_1_10_40, 0x00B18861 },
     { RUNTIME_VERSION_1_10_26, 0x00B18851 },
@@ -31,6 +32,7 @@ RVA <uintptr_t> InspectMode_Check({
 }, "0F 85 ? ? ? ? 41 80 BE ? ? ? ? ? 0F 85 ? ? ? ? 41 80 BE ? ? ? ? ?");
 
 RVA <uintptr_t> HTMLEntity_Check({
+    { RUNTIME_VERSION_1_10_75, 0x00B189B7 },
     { RUNTIME_VERSION_1_10_64, 0x00B189B7 },
     { RUNTIME_VERSION_1_10_40, 0x00B189B7 },
     { RUNTIME_VERSION_1_10_26, 0x00B189A7 },
@@ -39,6 +41,7 @@ RVA <uintptr_t> HTMLEntity_Check({
 
 typedef bool(*_Console_GetArgument)(void * paramInfo, void * scriptData, void * opcodeOffsetPtr, TESObjectREFR * thisObj, void * containingObj, void * scriptObj, void * locals, ...);
 RVA <_Console_GetArgument> Console_GetArgument({
+    { RUNTIME_VERSION_1_10_75, 0x004E3650 },
     { RUNTIME_VERSION_1_10_64, 0x004E3650 },
     { RUNTIME_VERSION_1_10_40, 0x004E3650 },
     { RUNTIME_VERSION_1_10_26, 0x004E3630 },
@@ -47,6 +50,7 @@ RVA <_Console_GetArgument> Console_GetArgument({
 
 typedef void(*_ExtraTextDisplayData_SetName)(ExtraTextDisplayData* extraTextDisplayData, const char* newName);
 RVA <_ExtraTextDisplayData_SetName> ExtraTextDisplayData_SetName({
+    { RUNTIME_VERSION_1_10_75, 0x000C0B30 },
     { RUNTIME_VERSION_1_10_64, 0x000C0B30 },
     { RUNTIME_VERSION_1_10_40, 0x000C0B30 },
     { RUNTIME_VERSION_1_10_26, 0x000C0B30 },
@@ -55,6 +59,7 @@ RVA <_ExtraTextDisplayData_SetName> ExtraTextDisplayData_SetName({
 
 typedef void * (*_ExtraTextDisplayData_Create)(ExtraTextDisplayData* memory);
 RVA <_ExtraTextDisplayData_Create> ExtraTextDisplayData_Create({
+    { RUNTIME_VERSION_1_10_75, 0x000AA210 },
     { RUNTIME_VERSION_1_10_64, 0x000AA210 },
     { RUNTIME_VERSION_1_10_40, 0x000AA210 },
     { RUNTIME_VERSION_1_10_26, 0x000AA210 },
