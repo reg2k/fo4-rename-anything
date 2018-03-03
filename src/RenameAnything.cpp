@@ -4,6 +4,7 @@
 #include "f4se/PluginAPI.h"
 #include "f4se/GameReferences.h"
 #include "f4se/GameExtraData.h"
+#include "f4se/PapyrusNativeFunctions.h"
 
 #include "f4se/ScaleformValue.h"
 #include "f4se/ScaleformCallbacks.h"
@@ -167,6 +168,31 @@ bool RegisterScaleform(GFxMovieView * view, GFxValue * f4se_root)
     return true;
 }
 
+//-----------------------
+// Papyrus Functions
+//-----------------------
+
+namespace PapyrusR2K {
+    bool SetRefName(StaticFunctionTag* base, TESObjectREFR* akRef, BSFixedString asName, bool abForce) {
+        if (!akRef) return false;
+        if (abForce) RenameReference(akRef, "");
+        return RenameReference(akRef, asName.c_str());
+    }
+    BSFixedString GetRefName(StaticFunctionTag* base, TESObjectREFR* akRef) {
+        if (!akRef) return BSFixedString();
+        return CALL_MEMBER_FN(akRef, GetReferenceName)();
+    }
+}
+
+bool RegisterPapyrus(VirtualMachine *vm) {
+    vm->RegisterFunction(new NativeFunction3<StaticFunctionTag, bool, TESObjectREFR*, BSFixedString, bool>("SetRefName", "RenameAnything", PapyrusR2K::SetRefName, vm));
+    vm->RegisterFunction(new NativeFunction1<StaticFunctionTag, BSFixedString, TESObjectREFR*>("GetRefName", "RenameAnything", PapyrusR2K::GetRefName, vm));
+
+    _MESSAGE("Registered Papyrus native functions.");
+
+    return true;
+}
+
 extern "C"
 {
 
@@ -233,6 +259,7 @@ bool F4SEPlugin_Load(const F4SEInterface *f4se)
     _MESSAGE("rename_anything load");
     RVAManager::UpdateAddresses(f4se->runtimeVersion);
     g_scaleform->Register("rename_anything", RegisterScaleform);
+    g_papyrus->Register(RegisterPapyrus);
 
     // patch memory
     unsigned char data[] = { 0x90, 0x90, 0x90, 0x90, 0x90, 0x90 };
