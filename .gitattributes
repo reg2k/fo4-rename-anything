@@ -1,8 +1,2 @@
-# Game is Windows-only so make sure Git doesn't touch our line endings.
-# (Mostly for .ini files)
-* text eol=crlf
-
-# Binary files should be left untouched
-*.swf binary
-*.pex binary
-*.dll binary
+# Ask Git to not do any line ending conversions
+* -text
