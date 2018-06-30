@@ -4,3 +4,5 @@
 
 # Binary files should be left untouched
 *.swf binary
+*.pex binary
+*.dll binary
