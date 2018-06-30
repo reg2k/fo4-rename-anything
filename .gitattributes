@@ -1,1 +1,6 @@
+# Game is Windows-only so make sure Git doesn't touch our line endings.
+# (Mostly for .ini files)
 * text eol=crlf
+
+# Binary files should be left untouched
+*.swf binary
