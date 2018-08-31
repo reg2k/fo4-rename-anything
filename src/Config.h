@@ -4,8 +4,8 @@
 //-----------------------
 // Plugin Information
 //-----------------------
-#define PLUGIN_VERSION              15
-#define PLUGIN_VERSION_STRING       "2.6.5"
+#define PLUGIN_VERSION              16
+#define PLUGIN_VERSION_STRING       "2.6.6"
 #define PLUGIN_NAME_SHORT           "rename_anything"
 #define PLUGIN_NAME_LONG            "Rename Anything"
 #define SUPPORTED_RUNTIME_VERSION   CURRENT_RELEASE_RUNTIME
