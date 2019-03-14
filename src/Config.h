@@ -4,8 +4,8 @@
 //-----------------------
 // Plugin Information
 //-----------------------
-#define PLUGIN_VERSION              18
-#define PLUGIN_VERSION_STRING       "2.6.8"
+#define PLUGIN_VERSION              19
+#define PLUGIN_VERSION_STRING       "2.6.9"
 #define PLUGIN_NAME_SHORT           "rename_anything"
 #define PLUGIN_NAME_LONG            "Rename Anything"
 #define SUPPORTED_RUNTIME_VERSION   CURRENT_RELEASE_RUNTIME
